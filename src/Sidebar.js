@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import './Sidebar.css'
-import SidebarChat from './SidebarChat';
+import { Avatar, IconButton } from '@material-ui/core';
+import ChatIcon from '@material-ui/icons/Chat';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ChatIcon from '@material-ui/icons/Chat';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { Avatar, IconButton } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import db from './firebase';
+import './Sidebar.css';
+import SidebarChat from './SidebarChat';
 
 
 const Sidebar = () => {
     const [rooms, setRooms] = useState([])
     useEffect(() => {
-        const unsubsciribe = db.collection('rooms')
+        const unsubsciribe = db.collection('rooms').orderBy('timestamp','desc')
         .onSnapshot(snap=>{
             setRooms(
                 snap.docs.map((doc)=>({
